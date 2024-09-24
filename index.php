@@ -1,3 +1,4 @@
+<?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,7 +16,7 @@
     <!------------------------- NAVIGASI ------------------------->
     <nav class="navbar">
       <div class="navbar_wrapper">
-        <h1 class="brand">Birthday Party!</h1>
+        <h1 class="brand">Weeding Party!</h1>
         <menu class="navbar_menu">
           <a href="#akad">Undangan</a>
           <a href="#resepsi">Lokasi acara</a>
@@ -29,9 +30,9 @@
 
     <!------------------------- HERO ------------------------->
     <div class="hero">
-      <h2>Birthday Party!</h2>
+      <h2>Weeding Party!</h2>
       <h1>Meow Meow</h1>
-      <h3>Las vegas, 11 Desember 2024</h3>
+      <h3>Samarinda, 11 Desember 2024</h3>
     </div>
     <!------------------------- END HERO ------------------------->
 
@@ -49,6 +50,7 @@
     </div>            
         <section class="akad_img"></section>       
       </div>
+      
     </section>   
     <!------------------------- SECTION RESEPSI ------------------------->
     <section id="resepsi">
@@ -74,32 +76,42 @@
 
 
     <!------------------------- SECTION BUKU TAMU ------------------------->
-    <section id="buku_tamu">
-      <div class="bingkai">
-        <div class="line"></div>
-        <h1>Buku Tamu</h1>
-        <div class="line"></div>
-      </div>
-      <div class="buku_tamu_container">
-        <form action="">
-          <input required type="text" placeholder="Nama" />
-          <textarea
-            name="ucapan"
-            placeholder="Ucapan & Doa"
-            cols="30"
-            rows="8"
-          ></textarea>
-          <select name="kehadiran">
-            <option value="hadir">Hadir</option>
-            <option value="tidak_hadir">Tidak Hadir</option>
-          </select>
-
-          <div class="btn">
-            <button type="submit">Submit</button>
-          </div>
+    <form action="insert.php" method="post">
+            <input type="text" name="nama" placeholder="Nama" required> <br>
+            <textarea name="ucapan" cols="30" rows="4" placeholder="Ucapan" required></textarea> <br>
+            <select name="keterangan" required>
+                <option value="" selected disabled hidden>Konfirmasi Kehadiran</option> 
+                <option value="1">Ya</option>
+                <option value="2">Tidak Hadir</option>
+                <option value="3">Tidak Tahu</option>
+            </select> <br>
+            <button type="submit">KIRIM</button>
         </form>
-      </div>
-    </section>
+        <?php
+    $sql = "SELECT * FROM bukutamu ORDER BY id DESC";
+    $hasil = $connection->query($sql);
+
+        ?>
+    <div style="height:100px; width:200px; overflow: auto;">
+        <?php
+        while($baris = $hasil->fetch_row()){
+        ?>
+        <div style="border-style:solid; border-color:red; margin: 10px;">
+            <p style="font-weight:bold"><?= $baris[1] ?></p>
+            <p><?=$baris[2] ?></p>
+        </div>
+
+    <?php
+    }
+    $hasil->free_result();
+    ?>
+</div>
+
+        
+    </body>
+</html>
+
+
     <!------------------------- END SECTION BUKU TAMU ------------------------->
 
     <!------------------------- SECTION MAP ------------------------->
